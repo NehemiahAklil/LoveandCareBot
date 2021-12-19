@@ -1,7 +1,9 @@
 import os
 import sys
-# from pymongo.mongo_client import MongoClient
-from bot import logger
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 # if version < 3.6, stop bot.
