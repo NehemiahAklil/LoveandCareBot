@@ -1,6 +1,6 @@
 from database import database
 import logging
-from constants import VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_CHURCH
+from constants import VOLUNTEER_EMAIL, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_CHURCH
 from objects.volunteer import Volunteer
 from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 
@@ -70,7 +70,24 @@ def phone(update: Update, context: CallbackContext) -> int:
     user_data['phone'] = user_phone
 
     update.message.reply_text(get_string(
-        lang, 'send_church'), reply_markup=ReplyKeyboardRemove())
+        lang, 'send_email'), reply_markup=ReplyKeyboardRemove())
+    return VOLUNTEER_EMAIL
+
+
+def email(update: Update, context: CallbackContext) -> int:
+    """Accept email and ask for church membership"""
+    user = update.message.from_user
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+    lang = context.user_data["lang"]
+
+    context.user_data['email'] = update.message.text
+    logger.info("User %s's email is %s.", user.first_name, update.message.text)
+
+    update.message.reply_text(
+        get_string(lang, 'send_church'))
     return VOLUNTEER_CHURCH
 
 
@@ -89,10 +106,10 @@ def church_membership(update: Update, context: CallbackContext) -> int:
                 user.first_name, update.message.text)
 
     database.create_volunteer(
-        Volunteer(user.id, user_data['name'], user_data['phone'], user_data['church']))
+        Volunteer(user.id, user_data['name'], user_data['phone'], user_data['email'], user_data['church']))
 
     update.message.reply_text(get_string(
-        lang, 'res_volunteer'))
+        lang, 'thank_volunteer'))
     return ConversationHandler.END
 
 
@@ -132,6 +149,16 @@ def fallback_name(update: Update, context: CallbackContext) -> int:
     lang = context.user_data["lang"]
 
     update.message.reply_text(get_string(lang, 'fallback')['name'])
+
+
+def fallback_email(update: Update, context: CallbackContext) -> int:
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+    lang = context.user_data["lang"]
+
+    update.message.reply_text(get_string(lang, 'fallback')['email'])
 
 
 def fallback_church(update: Update, context: CallbackContext) -> int:

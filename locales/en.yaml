@@ -13,7 +13,7 @@ adopt_btn:
   text: Link
 
 send_name: Please write your full name
-
+send_email: Please give us your email address
 send_phone: Please give us your phone number
 
 send_church: Please write your church membership
@@ -22,7 +22,7 @@ cancel: |
     
     If you have any comment please text us on telegram by +251960702380
 
-res_volunteer: Thank you, we will contact you back soon
+thank_volunteer: Thank you, we will contact you back soon
 
 greet_adopter: |
   We are very happy for your interest to adopt a.child. One of our partner organization named Kidmia Foundation is doing the local adoption process.
@@ -64,4 +64,5 @@ fallback:
   phone: Please input a valid phone number
   name: Please send a text with your name written on it
   church: Please send a church name
+  email: Please send a proper email address
 error: "Hey. I regret to inform you that an error happened while I tried to handle your update. My developers will be notified."
