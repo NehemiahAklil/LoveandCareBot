@@ -1,8 +1,8 @@
 import logging
 from telegram.ext import CommandHandler, CallbackQueryHandler, Filters, MessageHandler, ConversationHandler, Updater
 
-from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, ADOPTER_PHONE, ADOPTER_NAME, CHOOSE_SUPPORT, SUPPORT_US
-from config import TOKEN
+from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, ADOPTER_PHONE, ADOPTER_NAME
+from config import TOKEN, DOMAIN, PORT, ENV
 from handlers import dev, private, volunteer, adopt, support
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -61,8 +61,19 @@ def main():
     dp.add_handler(adoption_handler)
     dp.add_error_handler(dev.error_handler)
 
-    # start bot
-    updater.start_polling(drop_pending_updates=True)
+    # Start bot
+    if ENV:
+        logger.info(f"Using webhook with {DOMAIN + TOKEN}.")
+        # add handlers
+        updater.start_webhook(listen="0.0.0.0",
+                              port=PORT,
+                              url_path=TOKEN,
+                              webhook_url=DOMAIN + TOKEN)
+    else:
+        logger.info("Using long polling.")
+        updater.start_polling(timeout=15, read_latency=4,
+                              drop_pending_updates=True)
+
     updater.idle()
 
 

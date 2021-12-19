@@ -1,14 +1,15 @@
 from pymongo import MongoClient
 import objects
 import logging
+from config import CONNECTION_STRING
 
 
 class Database:
     def __init__(self) -> None:
         self.logger = logging.getLogger(__name__)
         self.logger.debug("Database init")
-        self.db = MongoClient()
-        self.db = self.db["Loveandcarebot"]
+        self.db = MongoClient(CONNECTION_STRING)
+        self.db = self.db["LoveandCareDB"]
 
     def get_user_language(self, user_id):
         user = self.db["user"].find_one({"id": user_id})
