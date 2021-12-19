@@ -16,6 +16,7 @@ send_name: Please write your full name
 
 send_phone: Please give us your phone number
 
+send_church: Please write your church membership
 cancel: |
     We have Canceled the current operation.
     
@@ -62,5 +63,5 @@ support_by_kind: |
 fallback:
   phone: Please input a valid phone number
   name: Please send a text with your name written on it
-
+  church: Please send a church name
 error: "Hey. I regret to inform you that an error happened while I tried to handle your update. My developers will be notified."

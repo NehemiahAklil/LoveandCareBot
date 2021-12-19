@@ -2,7 +2,7 @@ import logging
 from telegram.ext import CommandHandler, CallbackQueryHandler, Filters, MessageHandler, ConversationHandler, Updater
 from telegram.bot import Bot, BotCommand
 
-from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, ADOPTER_PHONE, ADOPTER_NAME
+from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_CHURCH, ADOPTER_PHONE, ADOPTER_NAME
 from config import TOKEN, DOMAIN, PORT, ENV
 from handlers import dev, private, volunteer, adopt, support
 
@@ -29,7 +29,9 @@ def main():
             VOLUNTEER_NAME: [MessageHandler(Filters.text & (~Filters.command), volunteer.name), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_name)],
             VOLUNTEER_PHONE: [MessageHandler(Filters.regex('^(?:\+2519|09)+\d{8}$'), volunteer.phone),
                               MessageHandler(Filters.contact, volunteer.phone),
-                              MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_phone)], },
+                              MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_phone)],
+            VOLUNTEER_CHURCH: [MessageHandler(Filters.text & (~Filters.command), volunteer.church_membership), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_church)],
+        },
         fallbacks=[CommandHandler('cancel', volunteer.cancel)]
     )
 
@@ -40,7 +42,8 @@ def main():
             ADOPTER_NAME: [MessageHandler(Filters.text & (~Filters.command), adopt.name), MessageHandler((~Filters.command) & Filters.all, adopt.fallback_name)],
             ADOPTER_PHONE: [MessageHandler(Filters.regex('^(?:\+2519|09)+\d{8}$'), adopt.phone),
                             MessageHandler(Filters.contact, adopt.phone),
-                            MessageHandler((~Filters.command) & Filters.all, adopt.fallback_phone)], },
+                            MessageHandler((~Filters.command) & Filters.all, adopt.fallback_phone)],
+        },
         fallbacks=[CommandHandler('cancel', adopt.cancel)]
     )
 

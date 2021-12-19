@@ -1,6 +1,6 @@
 from database import database
 import logging
-from constants import VOLUNTEER_NAME, VOLUNTEER_PHONE
+from constants import VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_CHURCH
 from objects.volunteer import Volunteer
 from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 
@@ -69,11 +69,30 @@ def phone(update: Update, context: CallbackContext) -> int:
                     user.first_name, user_phone)
     user_data['phone'] = user_phone
 
+    update.message.reply_text(get_string(
+        lang, 'send_church'), reply_markup=ReplyKeyboardRemove())
+    return VOLUNTEER_CHURCH
+
+
+def church_membership(update: Update, context: CallbackContext) -> int:
+    """Accept full name and ask for phone number"""
+    user = update.message.from_user
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+    lang = context.user_data["lang"]
+
+    context.user_data['church'] = update.message.text
+
+    logger.info("User %s's church is %s.",
+                user.first_name, update.message.text)
+
     database.create_volunteer(
-        Volunteer(user.id, user_data['name'], user_data['phone']))
+        Volunteer(user.id, user_data['name'], user_data['phone'], user_data['church']))
 
     update.message.reply_text(get_string(
-        lang, 'res_volunteer'), reply_markup=ReplyKeyboardRemove())
+        lang, 'res_volunteer'))
     return ConversationHandler.END
 
 
@@ -113,6 +132,16 @@ def fallback_name(update: Update, context: CallbackContext) -> int:
     lang = context.user_data["lang"]
 
     update.message.reply_text(get_string(lang, 'fallback')['name'])
+
+
+def fallback_church(update: Update, context: CallbackContext) -> int:
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+    lang = context.user_data["lang"]
+
+    update.message.reply_text(get_string(lang, 'fallback')['church'])
 
 
 def report(update: Update, context: CallbackContext) -> int:
