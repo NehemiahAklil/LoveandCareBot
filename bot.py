@@ -1,5 +1,6 @@
 import logging
 from telegram.ext import CommandHandler, CallbackQueryHandler, Filters, MessageHandler, ConversationHandler, Updater
+from telegram.bot import Bot, BotCommand
 
 from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, ADOPTER_PHONE, ADOPTER_NAME
 from config import TOKEN, DOMAIN, PORT, ENV
@@ -60,6 +61,14 @@ def main():
     dp.add_handler(volunteer_reg_handler)
     dp.add_handler(adoption_handler)
     dp.add_error_handler(dev.error_handler)
+
+    # Set Bot commands
+    commands = [
+        BotCommand('start', 'start using this bot'), BotCommand(
+            'help', 'for guidance on how to use this bot'),
+        BotCommand('cancel', 'to cancel and end converstions')]
+    bot = Bot(TOKEN)
+    bot.set_my_commands(commands)
 
     # Start bot
     if ENV:
