@@ -4,7 +4,7 @@ In what way would you like to serve?"
 btn:
   pick_volunteer: I want to volunteer
   pick_support: I want to support
-  pick_adopt: I want to adopt
+  pick_adopt: I'm interested to know about adoption
   support_financially: I want to support financially
   support_kind: I want to support in Kind
   
@@ -25,8 +25,8 @@ cancel: |
 thank_volunteer: Thank you, we will contact you back soon
 
 greet_adopter: |
-  We are very happy for your interest to adopt a.child. One of our partner organization named Kidmia Foundation is doing the local adoption process.
-
+  We are very happy for your interest to adopt  a child. One of our partner organization named Kidmia Foundation is doing the local adoption process.
+  
   Please give us your full name
 
 thank_adopter: |

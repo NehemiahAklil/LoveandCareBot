@@ -28,7 +28,7 @@ def main():
             CallbackQueryHandler(volunteer.start, pattern="pick_" + str(VOLUNTEER))],
         states={
             VOLUNTEER_NAME: [MessageHandler(Filters.text & (~Filters.command), volunteer.name), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_name)],
-            VOLUNTEER_PHONE: [MessageHandler(Filters.regex('^(?=.*\d).{8,}$'), volunteer.phone),
+            VOLUNTEER_PHONE: [MessageHandler(Filters.regex(r'^(?=[0-9\-]).{8,}$'), volunteer.phone),
                               MessageHandler(Filters.contact, volunteer.phone),
                               MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_phone)],
             VOLUNTEER_EMAIL: [MessageHandler(Filters.text & (~Filters.command), volunteer.email), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_email)],
