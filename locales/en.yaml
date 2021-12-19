@@ -1,0 +1,45 @@
+language: English
+greeting: "Welcome to Love and Care for His Little Ones.
+In what way would you like to serve?"
+btn:
+  pick_volunteer: I want to volunteer
+  pick_support: I want to support
+  pick_adopt: I want to adopt
+  support_financially: I want to support financially
+  support_kind: I want to support in Kind
+  
+adopt_btn:
+  url: https://kidmiaethiopia.org/local-adoption/
+  text: Link
+
+send_name: Please write your full name
+send_phone: Please share your contact information
+cancel: |
+    We have Canceled the current operation.
+    
+    If you have any comment please text us on telegram by +251964000005
+res_adoption: Thank you for considering adoption. We will call you soon.
+res_volunteer: Thank you, we will contact you back soon
+inform_adaptor: Please read the information in the link below and write your full name.
+
+
+which_support: How would you like to support our us   
+financial_support: |
+  Please deposit your love gift to the accounts below
+
+  1. <b>Love and Care for His Little Ones</b>
+       Berhan Bank 
+       <code>2600010019624</code> 
+
+  2. <b>Love and Care for His Little Ones</b>
+       Commercial Bank Of Ethiopia 
+       <code>1000366742477</code>
+support_by_kind: |
+      Please visit our Love and Care Center
+      Call +251960702380
+
+fallback:
+  phone: Please input a valid phone number
+  name: Please send a text with your name written on it
+
+error: "Hey. I regret to inform you that an error happened while I tried to handle your update. My developers will be notified."
