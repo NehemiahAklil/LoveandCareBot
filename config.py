@@ -25,7 +25,7 @@ if ENV:
     DOMAIN = os.environ.get('DOMAIN', None)
 else:
     TOKEN = os.environ.get(
-        "TOKEN", "5051746326:AAE-T9lc7TNEq9DDH8UpmpLOnyGZ8qBKuok")
+        "TOKEN", None)
     CONNECTION_STRING = os.environ.get("CONNECTION_STRING", 'localhost')
     OWNER_ID = 528744128
     DOMAIN = None
