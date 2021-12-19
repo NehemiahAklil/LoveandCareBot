@@ -23,14 +23,8 @@ def start(update: Update, context: CallbackContext):
     logger.info("User %s started  the conversation.", user.first_name)
     query = update.callback_query
     query.answer()
-    btn = get_string(lang, 'adopt_btn')
-    keyboard = [[
-        InlineKeyboardButton(btn["text"], url=btn["url"])
-    ]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
     query.edit_message_text(
-        text=get_string(lang, 'inform_adaptor'),
-        reply_markup=reply_markup
+        text=get_string(lang, 'greet_adopter'),
     )
     return ADOPTER_NAME
 
@@ -78,8 +72,16 @@ def phone(update: Update, context: CallbackContext) -> int:
     database.create_adopter(
         Adopter(user.id, user_data['name'], user_data['phone']))
 
+    btn = get_string(lang, 'adopt_btn')
+    keyboard = [[
+        InlineKeyboardButton(btn["text"], url=btn["url"])
+    ]]
+    reply_markup = InlineKeyboardMarkup(keyboard)
+
     update.message.reply_text(get_string(
-        lang, 'res_adoption'), reply_markup=ReplyKeyboardRemove())
+        lang, 'thank_adopter'), reply_markup=ReplyKeyboardRemove())
+    update.message.reply_text(get_string(
+        lang, 'inform_adopter'), reply_markup=reply_markup)
     return ConversationHandler.END
 
 
