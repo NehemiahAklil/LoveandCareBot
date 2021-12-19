@@ -17,7 +17,8 @@ ENV = bool(os.environ.get("ENV", False))
 
 
 if ENV:
-    TOKEN = os.environ.get("TOKEN", None)
+    TOKEN = os.environ.get(
+        "TOKEN", None)
     try:
         OWNER_ID = int(os.environ.get("OWNER_ID", 528744128))
     except ValueError:
@@ -27,7 +28,7 @@ if ENV:
     DOMAIN = os.environ.get('DOMAIN', None)
 else:
     TOKEN = os.environ.get(
-        "TOKEN", None)
+        "TOKEN", '1471004833:AAHVlEDPg1zBT0gz7xZ6d0tfteF3k-za0SQ')
     CONNECTION_STRING = os.environ.get("CONNECTION_STRING", 'localhost')
     OWNER_ID = 528744128
     DOMAIN = None

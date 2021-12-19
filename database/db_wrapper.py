@@ -19,6 +19,9 @@ class Database:
             self.db["user"].insert_one(vars(objects.User(user_id)))
             return "en"
 
+    def set_user_language(self, user_id, lang):
+        self.db["user"].update_one({"id": user_id}, {"$set": {"lang": lang}})
+
     def get_user(self, user_id):
         user = self.db["user"].find_one({"id": user_id})
         if not user:

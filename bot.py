@@ -21,6 +21,9 @@ def main():
 
     dp.add_handler(CommandHandler(
         'start', private.start, filters=Filters.chat_type.private))
+    dp.add_handler(CallbackQueryHandler(
+        private.change_lang, pattern=r"choose_"))
+
     dp.add_handler(CommandHandler('help', help))
 
     volunteer_reg_handler = ConversationHandler(
