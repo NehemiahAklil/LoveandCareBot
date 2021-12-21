@@ -17,14 +17,13 @@ def main():
     updater = Updater(token=TOKEN, use_context=True,
                       request_kwargs={'read_timeout': 10, 'connect_timeout': 10})
     dp = updater.dispatcher
-    # export_handler = CommandHandler('')
 
     dp.add_handler(CommandHandler(
         'start', private.start, filters=Filters.chat_type.private))
     dp.add_handler(CallbackQueryHandler(
         private.change_lang, pattern=r"choose_"))
 
-    dp.add_handler(CommandHandler('help', help))
+    dp.add_handler(CommandHandler('help', private.help))
 
     volunteer_reg_handler = ConversationHandler(
         entry_points=[

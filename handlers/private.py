@@ -42,6 +42,21 @@ def start(update: Update, context: CallbackContext) -> int:
         lang, "greeting"), reply_markup=reply_markup)
 
 
+def help(update: Update, context: CallbackContext) -> int:
+    """Send message on `/help`."""
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+
+    lang = user_data["lang"]
+    # Get user that sent /start and
+    name = update.message.from_user.first_name
+    logger.info('User %s asked for help.', name)
+    # Send message with text and appended InlineKeyboard
+    update.message.reply_text(get_string(lang, "help"))
+
+
 def change_lang(update: Update, context: CallbackContext) -> int:
     """Change Language of Bot."""
     user_data = context.user_data
