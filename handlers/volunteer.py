@@ -1,6 +1,6 @@
 from database import database
 import logging
-from constants import VOLUNTEER_EMAIL, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_CHURCH
+from constants import VOLUNTEER_EMAIL, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_REMARK
 from objects.volunteer import Volunteer
 from telegram import KeyboardButton, ReplyKeyboardMarkup, ReplyKeyboardRemove, Update
 
@@ -87,11 +87,11 @@ def email(update: Update, context: CallbackContext) -> int:
     logger.info("User %s's email is %s.", user.first_name, update.message.text)
 
     update.message.reply_text(
-        get_string(lang, 'send_church'))
-    return VOLUNTEER_CHURCH
+        get_string(lang, 'send_remark'))
+    return VOLUNTEER_REMARK
 
 
-def church_membership(update: Update, context: CallbackContext) -> int:
+def ask_remark(update: Update, context: CallbackContext) -> int:
     """Accept full name and ask for phone number"""
     user = update.message.from_user
     user_data = context.user_data

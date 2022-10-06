@@ -2,18 +2,19 @@ import logging
 from telegram.ext import CommandHandler, CallbackQueryHandler, Filters, MessageHandler, ConversationHandler, Updater
 from telegram.bot import Bot, BotCommand
 
-from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_EMAIL, VOLUNTEER_CHURCH, ADOPTER_PHONE, ADOPTER_NAME
+from constants import VOLUNTEER, ADOPT, SUPPORT, VOLUNTEER_NAME, VOLUNTEER_PHONE, VOLUNTEER_EMAIL, VOLUNTEER_REMARK, ADOPTER_PHONE, ADOPTER_NAME
 
 from config import TOKEN, DOMAIN, PORT, ENV
 from handlers import dev, private, volunteer, adopt, support
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO, filename="log.log")
+                    level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
 
 def main():
+    
     updater = Updater(token=TOKEN, use_context=True,
                       request_kwargs={'read_timeout': 10, 'connect_timeout': 10})
     dp = updater.dispatcher
@@ -35,7 +36,7 @@ def main():
                               MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_phone)],
             VOLUNTEER_EMAIL: [MessageHandler(Filters.text & (~Filters.command), volunteer.email), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_email)],
 
-            VOLUNTEER_CHURCH: [MessageHandler(Filters.text & (~Filters.command), volunteer.church_membership), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_church)],
+            VOLUNTEER_REMARK: [MessageHandler(Filters.text & (~Filters.command), volunteer.ask_remark), MessageHandler((~Filters.command) & Filters.all, volunteer.fallback_church)],
         },
         fallbacks=[CommandHandler('cancel', volunteer.cancel)]
     )

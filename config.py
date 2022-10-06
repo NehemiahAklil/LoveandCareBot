@@ -1,6 +1,9 @@
 import os
 import sys
 import logging
+from dotenv import load_dotenv, find_dotenv
+load_dotenv(find_dotenv(),override=True)
+
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +31,7 @@ if ENV:
     DOMAIN = os.environ.get('DOMAIN', None)
 else:
     TOKEN = os.environ.get(
-        "TOKEN", '1471004833:AAHVlEDPg1zBT0gz7xZ6d0tfteF3k-za0SQ')
+        "TOKEN", '5610492726:AAGHD5XO4klY37p_s9hf3NNUwOvL9Y-VJFk')
     CONNECTION_STRING = os.environ.get("CONNECTION_STRING", 'localhost')
     OWNER_ID = 528744128
     DOMAIN = None

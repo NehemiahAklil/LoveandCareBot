@@ -23,7 +23,7 @@ adopt_btn:
 send_name: Please write your full name
 send_email: Please give us your email address
 send_phone: Please give us your phone number
-send_church: Please write your church membership
+send_remark: Please write down any reamarks you would like to make
 
 cancel: |
   We have Canceled the current operation.
