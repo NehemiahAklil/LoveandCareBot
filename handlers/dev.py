@@ -1,13 +1,15 @@
+from http.client import UNAUTHORIZED
 import sys
 import traceback
 from datetime import datetime
 from json import JSONDecodeError
 import logging
 
-from telegram import Update, ParseMode
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update, ParseMode
 from telegram.ext import CallbackContext, Updater, CommandHandler, Filters
 from telegram.utils.helpers import mention_html
 from threading import Timer
+from config import OWNER_ID
 
 from database import database
 from locales import get_string, new_strings
@@ -59,3 +61,26 @@ def error_handler(update: Update, context: CallbackContext):
 
 def reply_id(update, _):
     update.effective_message.reply_text(f"{update.effective_chat.id}")
+
+
+def send_annoucment(update: Update, context: CallbackContext) -> int:
+    """Send message on `/announce`."""
+    if update.effective_user.id != OWNER_ID:
+        return
+    user_data = context.user_data
+    if "lang" not in user_data:
+        user_data["lang"] = database.get_user_language(
+            update.effective_user.id)
+
+    # lang = user_data["lang"]
+    applicants = database.get_all_volunteer()
+
+    applicant = None
+    for applicant in applicants:
+        logger.info(applicant)
+        user_id = applicant['id']
+        # lang = database.get_user_language(user_id)
+        try:
+            context.bot.send_message(user_id, get_string("amh", 'invite_msg'))
+        except UNAUTHORIZED:
+            logger.info("Couldn't send too" + applicant['name'])

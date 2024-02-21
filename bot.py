@@ -25,6 +25,7 @@ def main():
         private.change_lang, pattern=r"choose_"))
 
     dp.add_handler(CommandHandler('help', private.help))
+    dp.add_handler(CommandHandler('announce', dev.send_annoucment))
 
     volunteer_reg_handler = ConversationHandler(
         entry_points=[

@@ -49,6 +49,9 @@ class Database:
         if not volunteer:
             return False
         return volunteer
+    def get_all_volunteer(self):
+        volunteers = self.db["volunteer"].find() 
+        return volunteers 
 
 
 database = Database()
